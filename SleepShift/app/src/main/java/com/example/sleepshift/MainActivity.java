@@ -8,6 +8,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +20,14 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    MediaPlayer sleepsong;
     TextView textView;
     Button day1;
     Button day2;
     Button day3;
     Button day4;
+    Button sleep;
+    Button pause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         day2 = findViewById(R.id.day2);
         day3 = findViewById(R.id.day3);
         day4 = findViewById(R.id.day4);
+        sleep = findViewById(R.id.sleep);
+        pause = findViewById(R.id.pause);
+        sleepsong= MediaPlayer.create(MainActivity.this,R.raw.song);
 
         Thread thread = new Thread(){
             @Override
@@ -69,6 +76,17 @@ public class MainActivity extends AppCompatActivity {
                                     NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
                                     managerCompat.notify(1, builder.build());
                                 }
+
+                                if(currentTime.equals("04:00:00 PM")){
+                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                    builder.setContentTitle("Time to do exercises!");
+                                    builder.setContentText("Astronauts must exercise approximately two hours per day!");
+                                    builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                    builder.setAutoCancel(true);
+
+                                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                    managerCompat.notify(1, builder.build());
+                                }
                             }
                         });
                     }
@@ -79,6 +97,34 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         thread.start();
+
+        sleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sleepsong == null) {
+                    sleepsong = MediaPlayer.create(MainActivity.this, R.raw.song);
+                    sleepsong.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+                        @Override
+                        public void onCompletion(MediaPlayer mp){
+                            sleepsong.stop();
+                        }
+                    });
+                }
+
+                sleepsong.start();
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sleepsong!=null){
+                    sleepsong.release();
+                    sleepsong = null;
+                    //alarm message
+                }
+            }
+        });
 
         day1.setOnClickListener(new View.OnClickListener() {
             @Override

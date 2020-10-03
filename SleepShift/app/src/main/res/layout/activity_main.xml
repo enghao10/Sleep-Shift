@@ -26,7 +26,7 @@
         android:text="Day 1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.363" />
@@ -51,7 +51,7 @@
         android:text="Day 2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.749"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.363" />
@@ -63,10 +63,10 @@
         android:text="Day 3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintVertical_bias="0.633" />
 
     <Button
         android:id="@+id/day4"
@@ -75,9 +75,34 @@
         android:text="Day 4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.749"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintVertical_bias="0.633" />
+
+    <Button
+        android:id="@+id/sleep"
+        android:layout_width="107dp"
+        android:layout_height="55dp"
+        android:text="Play music"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.841" />
+
+    <Button
+        android:id="@+id/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause music"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
