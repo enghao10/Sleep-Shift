@@ -11,17 +11,22 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer sleepsong;
     TextView textView;
+    TextView time;
     Button day1;
     Button day2;
     Button day3;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
+        time = findViewById(R.id.time);
         day1 = findViewById(R.id.day1);
         day2 = findViewById(R.id.day2);
         day3 = findViewById(R.id.day3);
@@ -53,20 +59,21 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Calendar calendar = Calendar.getInstance();
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE , hh:mm:ss a");
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                                 String dateTime = simpleDateFormat.format(calendar.getTime());
                                 textView.setText(dateTime);
 
                                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm:ss a");
                                 String currentTime = simpleDateFormat1.format(calendar.getTime());
+                                time.setText(currentTime);
 
-                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                     NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
                                     NotificationManager manager = getSystemService(NotificationManager.class);
                                     manager.createNotificationChannel(channel);
                                 }
 
-                                if(currentTime.equals("08:00:00 AM") || currentTime.equals("01:00:00 PM") || currentTime.equals("07:00:00 PM")) {
+                                if (currentTime.equals("08:00:00 AM") || currentTime.equals("01:00:00 PM") || currentTime.equals("07:00:00 PM")) {
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
                                     builder.setContentTitle("Time to have a meal!");
                                     builder.setContentText("Have a nice day :)");
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                     managerCompat.notify(1, builder.build());
                                 }
 
-                                if(currentTime.equals("04:00:00 PM")){
+                                if (currentTime.equals("04:00:00 PM")) {
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
                                     builder.setContentTitle("Time to do exercises!");
                                     builder.setContentText("Astronauts must exercise approximately two hours per day!");
@@ -86,6 +93,21 @@ public class MainActivity extends AppCompatActivity {
 
                                     NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
                                     managerCompat.notify(1, builder.build());
+                                }
+
+                                //Find duration of current date and first day
+                                TextView test=findViewById(R.id.diff);
+                                Date date1,date2;
+                                String dateStr1 = "29/09/2020";
+                                String dateStr2 = dateTime;
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                try{
+                                    date1 = sdf.parse(dateStr1);
+                                    date2 = sdf.parse(dateStr2);
+                                    long diff = date2.getTime() - date1.getTime();
+                                    test.setText ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                                }catch(ParseException e){
+                                    Log.d("error","error");
                                 }
                             }
                         });
