@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Button day4;
     Button sleep;
     Button pause;
+    Button earth;
     int dayInSpace;
 
     @Override
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         day4 = findViewById(R.id.day4);
         sleep = findViewById(R.id.sleep);
         pause = findViewById(R.id.pause);
+        earth = findViewById(R.id.earth);
         sleepsong= MediaPlayer.create(MainActivity.this,R.raw.song);
         dayInSpace = 7;
 
@@ -498,6 +500,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MealDay4.class));
+            }
+        });
+        earth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, EarthTime.class));
             }
         });
     }
