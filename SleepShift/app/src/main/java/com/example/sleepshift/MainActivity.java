@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Button day4;
     Button sleep;
     Button pause;
+    int dayInSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         sleep = findViewById(R.id.sleep);
         pause = findViewById(R.id.pause);
         sleepsong= MediaPlayer.create(MainActivity.this,R.raw.song);
+        dayInSpace = 7;
 
         Thread thread = new Thread(){
             @Override
@@ -58,42 +60,16 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //Find the current date
                                 Calendar calendar = Calendar.getInstance();
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                                 String dateTime = simpleDateFormat.format(calendar.getTime());
                                 textView.setText(dateTime);
 
+                                //Find the current time
                                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm:ss a");
                                 String currentTime = simpleDateFormat1.format(calendar.getTime());
                                 time.setText(currentTime);
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
-                                    NotificationManager manager = getSystemService(NotificationManager.class);
-                                    manager.createNotificationChannel(channel);
-                                }
-
-                                if (currentTime.equals("08:00:00 AM") || currentTime.equals("01:00:00 PM") || currentTime.equals("07:00:00 PM")) {
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
-                                    builder.setContentTitle("Time to have a meal!");
-                                    builder.setContentText("Have a nice day :)");
-                                    builder.setSmallIcon(R.drawable.ic_launcher_background);
-                                    builder.setAutoCancel(true);
-
-                                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-                                    managerCompat.notify(1, builder.build());
-                                }
-
-                                if (currentTime.equals("04:00:00 PM")) {
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
-                                    builder.setContentTitle("Time to do exercises!");
-                                    builder.setContentText("Astronauts must exercise approximately two hours per day!");
-                                    builder.setSmallIcon(R.drawable.ic_launcher_background);
-                                    builder.setAutoCancel(true);
-
-                                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-                                    managerCompat.notify(1, builder.build());
-                                }
 
                                 //Find duration of current date and first day
                                 TextView test=findViewById(R.id.diff);
@@ -105,7 +81,195 @@ public class MainActivity extends AppCompatActivity {
                                     date1 = sdf.parse(dateStr1);
                                     date2 = sdf.parse(dateStr2);
                                     long diff = date2.getTime() - date1.getTime();
-                                    test.setText ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                                    long totalDay = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                                    test.setText ("Days: " + totalDay);
+
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+                                        NotificationManager manager = getSystemService(NotificationManager.class);
+                                        manager.createNotificationChannel(channel);
+                                    }
+
+                                    if (currentTime.equals("08:00:00 AM") || currentTime.equals("01:00:00 PM") || currentTime.equals("07:00:00 PM")) {
+                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                        builder.setContentTitle("Time to have a meal!");
+                                        builder.setContentText("Have a nice day :)");
+                                        builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                        builder.setAutoCancel(true);
+
+                                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                        managerCompat.notify(1, builder.build());
+                                    }
+
+                                    if (currentTime.equals("04:00:00 PM")) {
+                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                        builder.setContentTitle("Time to do exercises!");
+                                        builder.setContentText("Astronauts must exercise approximately two hours per day!");
+                                        builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                        builder.setAutoCancel(true);
+
+                                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                        managerCompat.notify(1, builder.build());
+                                    }
+
+                                    //Sleep Time
+                                    if(totalDay==0){
+                                        if (currentTime.equals("12:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==0 || totalDay==1){
+                                        if (currentTime.equals("11:00:00 PM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==3){
+                                        if (currentTime.equals("02:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==4){
+                                        if (currentTime.equals("04:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay>=5 && totalDay<5+dayInSpace){
+                                        if (currentTime.equals("09:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay>=4+dayInSpace && totalDay<=10+dayInSpace){
+                                        if (currentTime.equals("11:00:00 PM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to sleep!");
+                                            builder.setContentText("Good Night!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    //Wake Up Time
+                                    if(totalDay==0 || totalDay==1){
+                                        if (currentTime.equals("07:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==2){
+                                        if (currentTime.equals("08:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==3){
+                                        if (currentTime.equals("10:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay==4){
+                                        if (currentTime.equals("12:00:00 PM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay>=5 && totalDay<5+dayInSpace){
+                                        if (currentTime.equals("03:00:00 PM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
+                                    if(totalDay>=5+dayInSpace && totalDay<=10+dayInSpace){
+                                        if (currentTime.equals("08:00:00 AM")) {
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My Notification");
+                                            builder.setContentTitle("Time to wake up!");
+                                            builder.setContentText("Good Morning!");
+                                            builder.setSmallIcon(R.drawable.ic_launcher_background);
+                                            builder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                                            managerCompat.notify(1, builder.build());
+                                        }
+                                    }
+
                                 }catch(ParseException e){
                                     Log.d("error","error");
                                 }
